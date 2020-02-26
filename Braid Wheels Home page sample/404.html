@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Page Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="braid_logo.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <style>
+        * {
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        html {
+            /*color: #888;*/
+            display: table;
+            font-family: sans-serif;
+            height: 100%;
+            text-align: center;
+            width: 100%;
+        }
+
+        body {
+            display: table-cell;
+            vertical-align: middle;
+            margin: 2em auto;
+            background-color: #022D71;
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: 400;
+            margin:0 0 1% 0;
+        }
+
+        p {
+            margin: 1% auto;
+            width: 280px;
+        }
+
+        #errorContainer {
+            width: 95%;
+            margin: 1% auto;
+            color: white;
+            text-shadow: 1px 2px 3px black;
+            padding: 0 5px;
+        }
+
+        .braid_logo{
+            width: 100%;
+            height: auto;
+        }
+
+        #errorImg {
+            width: 50%;
+            height: auto;
+            -webkit-box-shadow: 0 5px 10px #aaa;
+            -moz-box-shadow: 0 5px 10px #aaa;
+            box-shadow: 0 5px 10px #aaa;
+            border-radius:5px;
+        }
+
+        .braid_logo {
+            width: 30%;
+            height: auto;
+        }
+
+        @media only screen and (max-width: 280px) {
+
+            body, p {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin: 0 0 1% 0.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="errorContainer">
+        <h1>Page Not Found</h1>
+        <img src="img/404.jpg" id="errorImg" alt="Error"/>
+        <p>Sorry, but there was a problem. Please select the Braid icon below to return to the main page.</p>
+        <p class="logo-wrap"><a href="index.html"><img class="braid_logo" src="img/braid_logo.jpg" alt="BRAID logo" /></a></p>
+    </div>
+</body>
+</html>
+<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->
