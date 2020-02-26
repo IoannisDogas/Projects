@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>AutoCaps</title>
+    <script src="jQueryV3_2_1.js"></script>
+    <style>
+        /*  #regexTester, #resultWrapper {
+            float: left;
+            width: 48%;
+            margin-left: 1%;
+        }
+
+        .textTester {
+            min-width: 98%;
+            max-width: 98%;
+        }*/
+
+         /*no match message*/
+        .noMatch {
+            text-align: center;
+            font-size: 20px;
+            color: red;
+        }
+
+         /*label and header style*/
+        .label, #header {
+            color: navy;
+            font-weight: bold;
+        }
+
+        .label {
+            float: left;
+            margin: 0 0 1% 1%;
+            width: 48%;
+        }
+
+         /*clear both class*/
+      
+        .keepClear {
+            clear: both;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*output container style*/
+
+        .resultList {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding: 2%;
+            border-radius: 5px;
+            margin-top: 1%;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <h3 id="header"></h3>
+
+    <!--input form-->
+
+    <form action="" method="post" name="form1" id="regexTester">
+        <p class="label">1. Insert answers:</p>
+        <p class="label">2. <input type="submit" name="button" id="button" value="Process answers"></p>
+
+        <p class="keepClear"></p>
+        <textarea name="string" rows="1" cols="70" class="textTester" id="string"></textarea>
+
+    </form>
+
+    <!--output container-->
+
+    <div id="resultWrapper">
+        <p class="label">3. Result:</p>
+        <p class="label">4. <button onclick="copyToClipboard('#testResults')">Copy answers</button>&nbsp;&nbsp;5. <input type="button" name="button" id="clearButton" value="Reset" onclick="clearInput();"></p>
+        <p class="keepClear"></p>
+        <div id="testResults"></div>
+
+    </div>
+    <p class="keepClear"></p>
+
+    <script type="text/javascript">
+
+        "use strict";
+        $('#regexTester').submit(function (e) {
+
+        /*input evaluation*/
+
+            const testString = $('#string').val();
+
+            const findFirstLetter = /^[a-z]/gm;
+            const findFirstSpaceLetter = /\s[a-z]/gm;
+
+            if (!testString.match(findFirstLetter) || !testString.match(findFirstSpaceLetter)) {
+                $('#testResults').html('<p class="noMatch">check input!</p>');
+            } else {
+                let replaceString = testString.replace(findFirstLetter, function caps(c) {
+                    return c.toUpperCase(findFirstLetter);
+                })
+                    .replace(findFirstSpaceLetter, function caps(c) {
+                        return c.toUpperCase(findFirstSpaceLetter);
+                    });
+
+
+
+
+            /*input and output to array values*/
+
+                let resultBeforeEvaluation = testString.split(" ");
+                console.log(resultBeforeEvaluation);
+                let resultAfterEvaluation = replaceString.split(" ");
+                console.log(resultAfterEvaluation);
+
+            /*populating the output list*/
+
+                let listContainer = document.getElementById('testResults');
+                let listOutput = document.createElement('ul');
+                listOutput.className = 'resultList';
+                listContainer.appendChild(listOutput);
+
+
+                let listContents = resultBeforeEvaluation.length;
+                let listAddContents = resultAfterEvaluation.length;
+                let i;
+                for (i = 0; i < listContents; ++i) {
+                    for (i = 0; i < listAddContents; ++i) {
+
+                        let listEntry = document.createElement('li');
+                        listEntry.innerHTML = '"' + resultBeforeEvaluation[i] + '",' + '"' + resultAfterEvaluation[i] + '" ';
+                        listOutput.appendChild(listEntry);
+
+                    /*alternative output to <p> element*/
+
+                        /*let listEntry = document.createElement('p');
+                        listEntry.innerHTML = '"' + resultBeforeEvaluation[i] + '",' + '"' + resultAfterEvaluation[i] + '" ';
+                        listContainer.appendChild(listEntry);*/
+
+                    }
+
+                }
+
+                e.preventDefault();
+            }
+        });
+
+        /*~~~~~~~~~~reset button*/
+
+        function clearInput() {
+            let textInput = document.getElementById('string');
+            let textOutput = document.getElementById('testResults');
+            if (confirm('Clear all fields?')) {
+                if (textInput.value && textOutput.innerHTML) {
+                    textInput.value = "";
+                    textOutput.innerHTML = "";
+                }
+            }
+        }
+
+
+        /*~~~~~~~~~~copy To Clipboard*/
+
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+
+                //console.log();
+    </script>
+</body>
+</html>
