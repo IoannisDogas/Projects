@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>svgColoring</title>
+    <style>
+        .colorPalette {
+            border: 2px solid black;
+            padding: 5px;
+            margin-bottom: 5px;
+            width: 210px;
+        }
+
+        .answersList {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+   
+    <p>Hypothetical color palette named 'Colorpool'. User can drag and drop colors ONLY to svg paths with the class="setColor" to change the default "fill" color values</p>
+    <div class="colorPalette">
+
+        <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+
+            <path id="aSVG" class="pickColor" d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="#00BD56" />
+            <path id="bSVG" class="pickColor" d="M70 10 C 70 20, 120 20, 120 10" stroke="black" fill="#8E1336" />
+            <path id="cSVG" class="pickColor" d="M10 60 C 20 80, 40 80, 50 60" stroke="black" fill="#1C4B82" />
+
+        </svg>
+    </div>
+
+   
+    <p>Hypothetical SVG that must be colored correctly. The fill color values are the ones that the user placed to svg paths with the class="setColor".Default fill color is white.</p>
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+
+        <path id="aSVG" class="setColor" d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="#00BD56" />
+        <path id="bSVG" class="setColor" d="M70 10 C 70 20, 120 20, 120 10" stroke="black" fill="#8E1336" />
+        <path d="M130 10 C 120 20, 180 20, 170 10" stroke="black" fill="white" />
+        <path id="cSVG" class="setColor" d="M10 60 C 20 80, 40 80, 50 60" stroke="black" fill="#1C4B82" />
+        <path id="dSVG" class="setColor" d="M70 60 C 70 80, 110 80, 110 60" stroke="black" fill="#1C4B82" />
+        <path d="M130 60 C 120 80, 180 80, 170 60" stroke="black" fill="white" />
+        <path id="eSVG" class="setColor" d="M10 110 C 20 140, 40 140, 50 110" stroke="black" fill="#1C4B82" />
+        <path id="fSVG" class="setColor" d="M70 110 C 70 140, 110 140, 110 110" stroke="black" fill="#1C4B82" />
+        <path d="M130 110 C 120 140, 180 140, 170 110" stroke="black" fill="white" />
+
+    </svg>
+
+    <!--Appears on check button click showing tick for correct, x for wrong.-->
+    <p class="coloringResult">&nbsp;</p>
+
+    <!--control buttons-->
+    <!--Check button: compares the users colors placed on the svg, with the correct colors from the answers list. Score container appears and shows user score-->
+    <button class='check' type='button'>Check</button>
+
+    <!--Try again button: keep the correct answers, the wrong answers return to the original "fill" color and the score is changed keeping only the correct colors score-->
+    <button class='try-again' type='button'>Try again</button>
+
+    <!--Reset button: reset exersice to original state. All svg paths to default "fill" color. Score resets to 0 and disappears from screen -->
+    <button class='clear-answers' type='button'>Reset</button>
+
+    <!--Correct answers list. Not visible in user-->
+    <ol class="answersList">
+        <li class="t1">#8E1336</li>
+        <li class="t1">#00BD56</li>
+        <li class="t1">#1C4B82</li>
+        <li class="t1">#1C4B82</li>
+        <li class="t1">#1C4B82</li>
+        <li class="t1">#1C4B82</li>
+
+    </ol>
+
+
+    <!--score table will appear after check button is clicked by the user. 3 <p> elements.-->
+    <!--1st p element shows total score in percentage and correct/total answers. i.e. "Score 50% (3/6)"-->
+    <!--2nd p element shows correct answers. i.e. "Correct 3"-->
+    <!--3rd p element shows wrong answers. i.e. "Wrong 3"-->
+    <div class='scoreContainer'>
+        <p>Score <span class="totalSVGScore"></span></p>
+        <p>Correct <span class="correctSvgColors"></span></p>
+        <p>Wrong <span class="wrongSvgColors"></span></p>
+
+    </div>
+
+    <script>
+
+        /*~~~check students answers~~~*/
+
+
+        var selectedFillColor = document.querySelectorAll(".setColor");
+        var selectedFillColorArray = [];
+        for (var i = 0; i < selectedFillColor.length; i++) {
+            var selectedColors = selectedFillColor[i].getAttribute('fill').toUpperCase();
+            selectedFillColorArray.push(selectedColors);
+        }
+
+        console.log(selectedFillColorArray);
+
+        /*~~~check correct answers list~~~~~~~~~~~*/
+
+        var correctAnswers = document.querySelectorAll("li.t1");
+        var correctAnswersArray = [];
+        for (var i = 0; i < correctAnswers.length; i++) {
+            var answerList = correctAnswers[i].innerText.toUpperCase();
+            correctAnswersArray.push(answerList);
+        }
+
+        console.log(correctAnswersArray);
+
+        /*~~~~~~~~~~~make score~~~~~~~~~~~~*/
+        function scoreFunction() {
+            var answersArrayComparison = Math.min(selectedFillColorArray.length, correctAnswersArray.length);
+            var countCorrect = 0;
+            var countWrong = 0
+            var collectWrong = [];
+
+            var answersContainer = document.querySelector('scoreContainer');
+
+            /*find correct/wrong answers*/
+            for (var index = 0; index < answersArrayComparison; index++) {
+                if (selectedFillColorArray[index] == correctAnswersArray[index]) {
+                    countCorrect++;
+
+                }
+                else if (correctAnswersArray.indexOf(selectedFillColorArray[index]) >= 0) {
+                    collectWrong.push(selectedFillColorArray[index]);
+                    countWrong++;
+                    selectedFillColor[index].classList.add("wrongColor");
+                }
+
+                /*~~~total score percentage calculation~~~*/
+
+                var correctAnswersList = correctAnswersArray.length;
+                function totalScorePercentage(actualCorrectAnswers, totalCorrectAnswers) {
+                    return Math.floor((actualCorrectAnswers / totalCorrectAnswers) * 100);
+                }
+
+                console.log(totalScorePercentage(countCorrect, correctAnswersList));
+
+                /*~~score output~~*/
+
+                var totalScoreOutcome = document.querySelector(".totalSVGScore").innerHTML = totalScorePercentage(countCorrect, correctAnswersList) + "% " + "(" + countCorrect + "/" + correctAnswersList + ")";
+
+                var correctInputOutcome = document.querySelector(".correctSvgColors").innerHTML = countCorrect;
+
+                var wrongInputOutcome = document.querySelector(".wrongSvgColors").innerHTML = countWrong;
+
+            }
+            console.log("Total Correct Color(s):");
+            console.log(countCorrect);
+            console.log("Total Wrong Color(s):");
+            console.log(countWrong);
+            console.log("Wrong Color(s):");
+            console.log(collectWrong);
+            return;
+        }
+
+        /*~~~~~~~~check button~~~~~~~~~~~*/
+
+        /*////Requirement 1: add class "wrongSvg" to every path with wrong color after check button is clicked.////*/
+        document.querySelector(".check").addEventListener('click', checkSvgAnswers);
+        function checkSvgAnswers() {
+
+            /*~~~~compare answers helper function~~~~~~~~~~*/
+            var isEqual = function (value, other) {
+
+                // Get the value type
+                var type = Object.prototype.toString.call(value);
+
+                // If the two objects are not the same type, return false
+                if (type !== Object.prototype.toString.call(other)) {
+                    return false;
+                }
+
+                // If items are not an object or array, return false
+                if (['[object Array]', '[object Object]'].indexOf(type) < 0) {
+                    return false;
+                }
+                // Compare the length of the length of the two items
+                var valueLen = type === '[object Array]' ? value.length : Object.keys(value).length;
+                var otherLen = type === '[object Array]' ? other.length : Object.keys(other).length;
+                if (valueLen !== otherLen) {
+                    return false;
+                }
+                // Compare two items
+                var compare = function (item1, item2) {
+
+                    // Get the object type
+                    var itemType = Object.prototype.toString.call(item1);
+
+                    // If an object or array, compare recursively
+                    if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+                        if (!isEqual(item1, item2)) {
+
+                            return false;
+                        }
+                    }
+
+                    // Otherwise, do a simple comparison
+                    else {
+
+                        // If the two items are not the same type, return false
+                        if (itemType !== Object.prototype.toString.call(item2)) {
+                            return false;
+                        }
+                        // Else if it's a function, convert to a string and compare
+                        // Otherwise, just compare
+                        if (itemType === '[object Function]') {
+
+                            if (item1.toString() !== item2.toString()) {
+
+                                return false;
+                            }
+                        } else if (item1 !== item2) {
+
+                            return false;
+                        }
+
+                    }
+                };
+                // Compare properties
+                if (type === '[object Array]') {
+                    for (var i = 0; i < valueLen; i++) {
+                        if (compare(value[i], other[i]) === false) {
+
+                            return false;
+                        }
+                    }
+                } else {
+                    for (var key in value) {
+                        if (value.hasOwnProperty(key)) {
+                            if (compare(value[key], other[key]) === false) {
+
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                // If nothing failed, return true
+                return true;
+
+            };
+
+            /*~~~~~~~~compare colors~~~~~~~~~~~*/
+            if (isEqual(selectedFillColorArray, correctAnswersArray)) {
+                document.querySelector(".coloringResult").innerHTML = "<span style='color:#00B119;'>&#x2714;</span>";
+                /*create score*/
+                scoreFunction();
+            } else if (!isEqual(selectedFillColorArray, correctAnswersArray)) {
+                document.querySelector(".coloringResult").innerHTML = "<span style='color:#D40D0D;'>&#10007;</span>";
+                /*create score*/
+                scoreFunction();
+            }
+
+
+        };
+
+
+        /*~~~~~~~~~~~~~~~try again button~~~~~~*/
+
+        /*////Requirement 2: after try-again button is clicked, total score(percentage) and wrong answers must change  because only wrong answers will be removed.////*/
+
+        document.querySelector(".try-again").addEventListener('click', retryColoring);
+
+        function retryColoring() {
+
+            var tryAgainSvg = document.querySelectorAll("path.wrongColor");
+
+            for (var i = 0; i < tryAgainSvg.length; i++) {
+                tryAgainSvg[i].classList.remove('wrongColor');
+                tryAgainSvg[i].setAttribute('fill', '#FFFFFF');
+            }
+
+            document.querySelector(".coloringResult").innerHTML = "";
+            document.querySelector(".totalSVGScore").innerHTML = "";
+            document.querySelector(".wrongSvgColors").innerHTML = "";
+        };
+
+
+
+        /*~~~~~~~~~~~~~~reset button*/
+        /*//// Requirement 3:after reset button is clicked total score(percentage) and wrong/correct answers must reset to zero////*/
+        document.querySelector(".clear-answers").addEventListener("click", resetFillColor);
+
+        function resetFillColor() {
+            var resetSvg = document.querySelectorAll(".setColor");
+
+            for (var i = 0; i < resetSvg.length; i++) {
+                resetSvg[i].classList.remove('wrongSvg');
+                resetSvg[i].setAttribute('fill', '#FFFFFF');
+
+            }
+
+            document.querySelector(".coloringResult").innerHTML = "";
+            document.querySelector(".totalSVGScore").innerHTML = "";
+            document.querySelector(".correctSvgColors").innerHTML = "";
+            document.querySelector(".wrongSvgColors").innerHTML = "";
+
+        };
+
+        /*~~~~~~~~~~~~~~~~DEBUG SOLUTION~~~~~~~~~~~~~~~*/
+        (function debug() {
+
+            /*Hex color format validator*/
+            var hexRegex = /^\#[0-9a-fA-F]{6}$/i;
+
+
+            /*~~~~~~~~~~~check colorpool hex color format*/
+            var colorpoolFillColor = document.querySelectorAll(".pickColor");
+            for (var i = 0; i < colorpoolFillColor.length; i++) {
+                var colorpoolSelectedColors = colorpoolFillColor[i].getAttribute('fill').toUpperCase();
+
+                if (colorpoolSelectedColors.search(hexRegex)) {
+                    console.error('Check Colorpool color format! The color should be in hex format: "#" with "six characters(letters and/or numbers)" i.e. "#7EFEA9".');
+
+                } else {
+                    console.log('colorpool color format is OK!');
+
+                }
+            }
+
+
+            /*~~~~~~~~~~~~~~~~check students answers*/
+            var selectedFillColor = document.querySelectorAll(".setColor");
+            var selectedFillColorArray = [];
+            for (var i = 0; i < selectedFillColor.length; i++) {
+                var selectedColors = selectedFillColor[i].getAttribute('fill').toUpperCase();
+                selectedFillColorArray.push(selectedColors);
+
+            }
+
+            /*~~~~~~~~~~~~~~~~check correct answers list*/
+            var correctAnswers = document.querySelectorAll("li.t1");
+            var correctAnswersArray = [];
+            for (var i = 0; i < correctAnswers.length; i++) {
+                var answerList = correctAnswers[i].innerText.toUpperCase();
+                if (answerList.search(hexRegex)) {
+                    console.error('Check answers color format! The color should be in hex format: "#" with "six characters(letters and/or numbers)" i.e. "#7EFEA9".');
+                } else {
+                    correctAnswersArray.push(answerList);
+                    console.log('answers color format is OK!');
+                }
+            }
+
+            /*~~~~~~~~~~~~~~~~~~~~~Check answers number*/
+            if (selectedFillColorArray.length !== correctAnswersArray.length) {
+                console.error('Check answers number! The number of colors in answer-map is not equal to the number of SVG color paths!');
+            } else {
+                console.log('answers number is OK!');
+            }
+
+        })();
+
+    </script>
+</body>
+</html>
