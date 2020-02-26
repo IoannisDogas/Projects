@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Character Converter</title>
+    <script src="jQueryV3_2_1.js"></script>
+    <style>
+
+        /*form container and results container*/
+
+        #regexTester, #resultWrapper {
+            float: left;
+            width: 48%;
+            margin-left: 1%;
+        }
+        /*text area*/
+
+        .textTester {
+            min-width: 98%;
+            max-width: 98%;
+        }
+        /*no match message*/
+
+        .noMatch {
+            text-align: center;
+            font-size: 20px;
+            color: red;
+        }
+
+        /*label navy color*/
+        
+        .label {
+            color: navy;
+            font-weight: bold;
+            float: left;
+            margin: 0 0 1% 1%;
+            width: 48%;
+        }
+
+        /*result outpout container*/
+
+        #output {
+            border: 1px solid navy;
+            padding: 2%;
+            border-radius: 5px;
+            margin-top:1%;
+        }
+
+        /*replaced punctuation red highlight*/
+
+        .changed {
+            color: red;
+        }
+
+        /*clear both class*/
+
+        .keepClear {
+            clear: both;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <!--input form-->
+
+    <form action="" method="post" name="form1" id="regexTester">
+        <p class="label">1. Insert text:</p>
+        <p class="label">2. <input type="submit" name="button" id="button" value="Process text"></p>
+        <p class="keepClear"></p>
+        <textarea name="string" rows="25" class="textTester" id="string"></textarea>
+       
+    </form>
+
+    <!--output container-->
+
+    <div id="resultWrapper">
+        <p class="label">3. Result:</p> 
+        <p class="label">4. <button onclick="copyToClipboard('#output')">Copy text</button>&nbsp;&nbsp;5. <input type="button" name="button" id="clearButton" value="Reset" onclick="clearInput();"></p>
+        <p class="keepClear"></p>
+        <div id="testResults"></div>
+    </div>
+    <p class="keepClear"></p>
+
+
+
+    <script>
+        "use strict";
+        $('#regexTester').submit(function (e) {
+
+            let testString = $('#string').val();
+            /*PRIME (′), RIGHT SINGLE QUOTATION MARK (’) respectively*/
+            let singleQuotation = /[\u2032\u2019]/g,
+
+                /*HYPHEN-MINUS, HYPHEN, NON-BREAKING HYPHEN, EM DASH respectively*/
+                hyphen = /[\u002D\u2010\u2011\u2014]/g;
+
+  /*input evaluation*/
+
+            if (!testString.match(singleQuotation) && !testString.match(hyphen)) {
+                $('#testResults').html('<p class="noMatch">No match!</p>');
+            } else {
+                let replaceString = testString.replace(singleQuotation, "<bold class='changed'>'</bold>").replace(hyphen, "<strong class='changed'>-</strong>");
+                $('#testResults').html('<p id="output">' + replaceString + '</p>');
+            }
+            e.preventDefault();
+        });
+
+        /*~~~~~~~~~~clear button*/
+
+        function clearInput() {
+            let textInput = document.getElementById('string');
+            let textOutput = document.getElementById('testResults');
+            if (confirm('Clear all fields?')) {
+                if (textInput.value && textOutput.innerHTML) {
+                    textInput.value = "";
+                    textOutput.innerHTML = "";
+                }
+            }
+        }
+
+
+        /*~~~~~~~~~~copy To Clipboard*/
+
+        function copyToClipboard(element) {
+            let $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+
+
+    </script>
+</body>
+</html>
