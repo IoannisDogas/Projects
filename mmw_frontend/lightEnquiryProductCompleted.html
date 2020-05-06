@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mainline Menswear</title>
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="icon.png">
+
+
+    <link id="themeCss" rel="stylesheet" href="css/light.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+</head>
+<body id="bodyIdMenu" class="bodyClassMenu">
+    <!--[if IE]>
+         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+       <![endif]-->
+    <!--header container-->
+
+    <div class="header-container">
+        <header class="flex-containerNavEnquiryCompleted">
+            <div id="dotTheme" class="themeChangeContainer themeChangeEnqCompleted"><img alt="lightTheme" id="lightCss" src="img/icons/sunGrey.png" /><img alt="darkTheme" id="darkCss" src="img/icons/moonGrey.png" /></div>
+            <h4 class="headerTextMenuEnqCompleted">BOSS Multi Colour Triple Pack T Shirts</h4>
+            <p class="navigationArrowContainer"><a class="navigationArrow" href="lightMenu.html">&#60;</a></p>
+
+        </header>
+    </div>
+
+    <div class="main-container">
+        <div class="main wrapper clearfix">
+            <article>
+
+                <!--form content-->
+
+                <section class="formContent clearfix">
+
+                    <!--submission form-->
+
+                    <div>
+                        <div class="formContainer">
+                            <form id="enquiryForm" class="wrapperForm" action="https://frontendtest.mainlinemenswear.co.uk/submit" method="post" target="_blank">
+
+
+                                <!--selected product-->
+
+                                <div class="selectedProductContainer">
+                                    <div class="imgContainerMenu">
+                                        <p class="banner">EXCLUSIVE</p>
+                                        <img src="img/product-images/612476.jpg" class="imageProperties" alt="product image" />
+                                        <div class="descriptionContainer">
+                                            <p class="productInfo productInfo1_json">&nbsp;</p>
+                                            <p class="productPriceDelete productPrice1_json">&nbsp;</p>
+                                            <p class="productOffer productOffer1_json">&nbsp;</p>
+                                            <div class="productIdContainer clearfix">
+                                                <div class="productIdLabel">
+                                                    <input id="productIdValue" type="radio" name="productId" value="" checked />
+                                                    <label for="productIdValue">product ID</label>
+                                                </div>
+                                                <div class="productIdAquire">
+                                                    <p id="aquireId" class="productId productId1_json">&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!--size selector-->
+
+                                <div class="sizeSelectorContainer">
+                                    <p class="sizePrompt">SELECT YOUR SIZE*</p>
+
+                                    <p>
+                                        <input class="sizeSelectRadio" id="small" type="radio" name="sizeSelected" value="Small">
+                                        <label class="sizeSelect" for="small">SMALL</label>
+                                    </p>
+                                    <p>
+                                        <input class="sizeSelectRadio" id="medium" type="radio" name="sizeSelected" value="Medium">
+                                        <label class="sizeSelect" for="medium">MEDIUM</label>
+                                    </p>
+                                    <p>
+                                        <input class="sizeSelectRadio" id="large" type="radio" name="sizeSelected" value="Large">
+                                        <label class="sizeSelect" for="large">LARGE</label>
+                                    </p>
+                                    <p>
+                                        <input class="sizeSelectRadio" id="xlarge" type="radio" name="sizeSelected" value="XLarge">
+                                        <label class="sizeSelect" for="xlarge">X LARGE</label>
+                                    </p>
+                                    <p>
+                                        <input class="sizeSelectRadio" id="xxlarge" type="radio" name="sizeSelected" value="XXLarge">
+                                        <label class="sizeSelect" for="xxlarge">XX LARGE</label>
+                                    </p>
+
+                                </div>
+
+                                <div class="formInputContainer">
+                                    <!--user name-->
+
+                                    <div class="formComponents">
+                                        <div class="formComponentName clearfix">
+                                            <label class="labelName" for="fullname">Full Name*</label><span class="message messageName">Please enter full name.</span>
+                                        </div>
+                                        <div class="formComponentInput">
+                                            <input type="text" id="fullname" name="fullname" required />
+                                        </div>
+                                    </div>
+
+                                    <!--user mail-->
+
+                                    <div class="formComponents">
+                                        <div class="formComponentName formComponentNameEdit clearfix">
+                                            <label class="labelName" for="mail">Email*</label><span class="message messageMail">Please enter an email address.</span>
+                                        </div>
+                                        <div class="formComponentInput">
+                                            <input type="email" id="mail" name="email" required />
+                                        </div>
+                                    </div>
+
+                                    <!--competitor query-->
+
+                                    <div class="radioContainer">
+                                        <p>Have you found this cheaper in a competitor site?*</p>
+                                        <div class="radio">
+                                            <input id="yes" type="radio" name="competitor" value="Yes">
+                                            <label for="yes">Yes</label>
+                                            <input id="no" type="radio" name="competitor" value="No" checked="checked">
+                                            <label for="no">No</label>
+                                        </div>
+
+                                        <!--competitor url -->
+
+                                        <div class="urlContainer displayNone">
+                                            <div class="formComponentName formComponentNameEdit clearfix">
+                                                <label class="labelName" for="competitorUrl">Competitor URL*</label><span class="message messageUrl">Please enter a competitor url</span>
+                                            </div>
+                                            <div class="formComponentInput">
+                                                <input type="url" id="competitorUrl" name="competitorUrl" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--enquiry message-->
+
+                                    <div class="enquiryMessageContainer">
+                                        <div class="formComponentName formComponentNameEdit clearfix">
+                                            <label class="labelName" for="enquiry">Enquiry Message* (<span id="charCount">200</span>/200)</label>
+                                            <span class="message messageCount">Please enter a message in your enquiry.</span>
+                                        </div>
+                                        <div class="formComponentInput">
+                                            <textarea id="enquiry" name="enquiry" minlength="50" maxlength="200" required></textarea>
+
+                                        </div>
+                                    </div>
+
+                                    <!--submit form-->
+
+                                    <div class="submitContainer clearfix">
+                                        <p class="submitText">Fields marked with an *asterisk are compulsory.</p>                                       <div class="submitButtonContainer">
+                                            <input id="submit" class="submitButton button" type="submit" value="SUBMIT YOUR ENQUIRY" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </section>
+            </article>
+
+
+        </div>
+    </div>
+
+    <!--script-->
+
+    <script src="js/vendor/jquery_3_4_1.js"></script>
+    <script src="js/main.js"></script>
+
+    <<script>
+
+
+        $("#enquiryForm").on('submit', function () {
+            /*populate table with form data */
+
+            /* fullname get */
+
+            let fullname = $("#fullname").val();
+            localStorage.setItem("fullname", fullname);
+
+            /* userMail get */
+
+            let userMail = $("#mail").val();
+            localStorage.setItem("userMail", userMail);
+
+
+            /* size select get */
+
+            let sizeSelect = $("input[name='sizeSelected']:checked").val();
+            localStorage.setItem("sizeSelect", sizeSelect);
+
+            /* competitor select get */
+
+            let competitor = $("input[name='competitor']:checked").val();
+            localStorage.setItem("competitor", competitor);
+
+
+            /* competitor url get */
+
+            let competitorUrl = $("#competitorUrl").val();
+            localStorage.setItem("competitorUrl", competitorUrl);
+
+
+            /* enquiry message get */
+
+            let enquiry = $("#enquiry").val();
+            localStorage.setItem("enquiry", enquiry);
+        });
+    </script>
+
+</body>
+</html>
